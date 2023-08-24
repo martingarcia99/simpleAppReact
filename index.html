@@ -31,16 +31,18 @@
     </div>
     <script type="text/babel">
         const $app = document.getElementById("app");
-        const h = React.createElement
+        const useState = React.useState;
 
-        const Avatar = params => {
-            const src = `https://randomuser.me/api/portraits/women/${params.id}.jpg`
-            //return h('img',{src});
+        const Avatar = props => {
+            const [enabled,setEnabled] = useState(true)
 
+            const src = `https://randomuser.me/api/portraits/women/${props.id}.jpg`
+            
+            const className = enabled ? '' : 'disabled'
             return ( 
                 <picture>
-                    <img src={src} />
-                    <strong>{params.name}</strong>
+                    <img onClick={() => setEnabled(!enabled)}className={className} src={src} />
+                    <strong>{props.name}</strong>
                 </picture>
             );
         };
@@ -52,7 +54,7 @@
             </div>,
             $app
         );
-        
+
         /*
         $app.querySelectorAll("img").forEach(img => {
             img.addEventListener("click", () => {
