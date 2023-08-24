@@ -37,23 +37,23 @@
             const src = `https://randomuser.me/api/portraits/women/${params.id}.jpg`
             //return h('img',{src});
 
-            return <img src={src} />
+            return ( 
+                <picture>
+                    <img src={src} />
+                    <strong>{params.name}</strong>
+                </picture>
+            );
         };
 
-        ReactDOM.render(h('div',null,[h(Avatar, {id:1}), h(Avatar, {id:2})]),$app);
+        ReactDOM.render(
+            <div>
+                <Avatar id={1} name="Ana" />
+                <Avatar id={3} name="Lucia"/>
+            </div>,
+            $app
+        );
+        
         /*
-        const Avatar = params => {
-            const src = `https://randomuser.me/api/portraits/women/${params.id}.jpg`
-            return `
-            <picture>
-                <img src="${src}">
-                <strong>${params.name}</strong>
-            </picture>
-            `
-        };
-        $app.innerHTML += Avatar({id:1, name: 'Andrea'});
-        $app.innerHTML += Avatar({id:2, name: 'Manuela'});
-
         $app.querySelectorAll("img").forEach(img => {
             img.addEventListener("click", () => {
                 img.classList.toggle("disabled");
