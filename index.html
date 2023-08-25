@@ -11,10 +11,16 @@
             text-align: center;
             width: 100px;
         }
+        picture.is-small{
+            width:50px;
+        }
+        picture.is-large{
+            width: 200px;
+        }
         img {
             box-shadow: 0 0 15px #999;
             border-radius: 50%;
-            width: 100px;
+            width: 100%;
         }
         img.disabled {
             opacity: 0.3;
@@ -33,24 +39,44 @@
         const $app = document.getElementById("app");
         const useState = React.useState;
 
-        const Avatar = props => {
-            const [enabled,setEnabled] = useState(true)
+        const Avatar = ({id, name="Carolina", size}) => {
+            const [enabled,setEnabled] = useState(true);
 
-            const src = `https://randomuser.me/api/portraits/women/${props.id}.jpg`
-            
-            const className = enabled ? '' : 'disabled'
+            const src = `https://randomuser.me/api/portraits/women/${id}.jpg`
+            const imgClassName = enabled ? '' : 'disabled'
+
+            let pictureClassName = ''
+            if (size === "small"){
+                pictureClassName = 'is-small'
+            } else if (size === "large"){
+                pictureClassName = 'is-large'
+            }
+
             return ( 
-                <picture>
-                    <img onClick={() => setEnabled(!enabled)}className={className} src={src} />
-                    <strong>{props.name}</strong>
+                <picture className={pictureClassName}>
+                    {
+                        id ? (
+                            <img onClick={() => setEnabled(!enabled)} className={imgClassName} src={src} />
+                        ) : <strong>Sin imagen</strong>
+                    }
+                    
+                    <strong>{enabled ? name : "Desactivada"}</strong>
                 </picture>
             );
         };
 
+        function Contador(){
+            return <button>Boton</button>
+        }
+
         ReactDOM.render(
             <div>
-                <Avatar id={1} name="Ana" />
+                <Avatar id={1} name="Ana" size="small"/>
                 <Avatar id={3} name="Lucia"/>
+                <Avatar id={4} name="Rocio" size="large"/>
+                <Avatar id={2} size="small"/>
+                <Avatar />
+                <Contador/>
             </div>,
             $app
         );
